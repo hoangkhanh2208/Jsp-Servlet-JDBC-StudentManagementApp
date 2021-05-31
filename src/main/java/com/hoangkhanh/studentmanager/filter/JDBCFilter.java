@@ -20,7 +20,7 @@ import com.hoangkhanh.studentmanager.conn.ConnectionUtils;
 import com.hoangkhanh.studentmanager.utils.MyUtils;
 
 
-@WebFilter(filterName = "jdbcFilter", urlPatterns = { "/abc" })
+@WebFilter(filterName = "jdbcFilter", urlPatterns = { "/*" })
 public class JDBCFilter implements Filter {
 	public JDBCFilter() {
     }
@@ -39,29 +39,30 @@ public class JDBCFilter implements Filter {
 			
 		String urlPattern = servletPath;
 		
-		if (pathInfo != null) {
-            urlPattern = servletPath + "/*";
-        }
+		 if (pathInfo != null) {
+	            // => /spath/*
+	            urlPattern = servletPath + "/*";
+	        }
 		
 		 // Key: servletName.
         // Value: ServletRegistration
-        Map<String, ? extends ServletRegistration> servletRegistrations = request.getServletContext()
-                .getServletRegistrations();
+		 Map<String, ? extends ServletRegistration> servletRegistrations = request.getServletContext()
+	                .getServletRegistrations();
         
-        Collection<? extends ServletRegistration> values = servletRegistrations.values();
-        for (ServletRegistration sr : values) {
-            Collection<String> mappings = sr.getMappings();
-            if (mappings.contains(urlPattern)) {
-                return true;
-            }
-        }
-        return false;
+		 Collection<? extends ServletRegistration> values = servletRegistrations.values();
+	        for (ServletRegistration sr : values) {
+	            Collection<String> mappings = sr.getMappings();
+	            if (mappings.contains(urlPattern)) {
+	                return true;
+	            }
+	        }
+	        return false;
 	}
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		HttpServletRequest req = (HttpServletRequest) request;
+		 HttpServletRequest req = (HttpServletRequest) request;
 		
 		if(this.needJDBC(req)) {
 			System.out.println("Open Connection for: " + req.getServletPath());
@@ -76,6 +77,7 @@ public class JDBCFilter implements Filter {
 				MyUtils.storeConnection(request, conn);
 				
 				chain.doFilter(request, response);
+				 
 				conn.commit();
 			} catch (Exception e) {
 				e.printStackTrace();

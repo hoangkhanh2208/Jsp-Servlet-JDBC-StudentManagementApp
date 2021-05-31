@@ -39,8 +39,8 @@
 				<td>${student.fullName}</td>
 				<td>${student.age}</td>
 				<td>${student.address}</td>
-				<td><a href="editStudent?id=${student.id}"><img alt="" src="../assets/imgs/icon-edit.png"></a></td>
-				<td><a href="deleteStudent?id=${student.id}"><img alt="" src="../assets/imgs/icon-delete.png"></a></td>
+				<td><a href="editStudent?id=${student.id}">Edit</a></td>
+				<td><a href="deleteStudent?id=${student.id}">Delete</a></td>
 			</tr>
 		</c:forEach>
 	</table>

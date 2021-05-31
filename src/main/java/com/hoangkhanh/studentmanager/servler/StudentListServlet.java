@@ -27,22 +27,18 @@ public class StudentListServlet extends HttpServlet{
 	  
 	  @Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		Connection conn = MyUtils.getStoredConnection(req);
-		  resp.setContentType("text/html;charset=UTF-8");
-		  req.setCharacterEncoding("utf-8");
+		Connection conn = MyUtils.getStoredConnection(req);
+		resp.setContentType("text/html;charset=UTF-8");
+		req.setCharacterEncoding("utf-8");
 		
 		String errorString = null;
 		List<Student> list = null;
 		
 		try {
-			Connection conn = ConnectionUtils.getConnection();
 			list = DBUtils.queryStudent(conn);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			errorString = e.getMessage();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            errorString = e.getMessage();
 		}
 		
 		req.setAttribute("errorString", errorString);

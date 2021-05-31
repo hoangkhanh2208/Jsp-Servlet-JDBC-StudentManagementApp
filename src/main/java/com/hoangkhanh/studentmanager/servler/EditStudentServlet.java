@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.hoangkhanh.studentmanager.bean.Student;
 import com.hoangkhanh.studentmanager.conn.ConnectionUtils;
 import com.hoangkhanh.studentmanager.utils.DBUtils;
+import com.hoangkhanh.studentmanager.utils.MyUtils;
 
 @WebServlet(urlPatterns = { "/editStudent" })
 public class EditStudentServlet extends HttpServlet{
@@ -23,12 +24,7 @@ public class EditStudentServlet extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Connection conn = null;
-		try {
-			conn = ConnectionUtils.getConnection();
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		Connection conn = MyUtils.getStoredConnection(req);
 		
 		String idStr = req.getParameter("id");
 		

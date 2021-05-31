@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.hoangkhanh.studentmanager.conn.ConnectionUtils;
 import com.hoangkhanh.studentmanager.utils.DBUtils;
+import com.hoangkhanh.studentmanager.utils.MyUtils;
 
 @WebServlet(urlPatterns = "/deleteStudent")
 public class DeleteStudentServlet extends HttpServlet{
@@ -22,12 +23,7 @@ public class DeleteStudentServlet extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Connection conn = null;
-		try {
-			conn = ConnectionUtils.getConnection();
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		Connection conn = MyUtils.getStoredConnection(req);
 		
 		resp.setContentType("text/html;charset=UTF-8");
 		  req.setCharacterEncoding("utf-8");
